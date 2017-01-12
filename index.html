@@ -21,7 +21,7 @@ body {
 }
 .axisWhite text{
   fill: white;
-  font-size: 13;
+  fontsize: 15;
 } 
 form {
   position: absolute;
@@ -213,6 +213,7 @@ node = root;
          .style("opacity", function(d) {return d.depth == 0 ? 0.2 : 0.4})
         currentObject = this
         tooltip 
+         .attr("dx", function(){console.log(d.name.split(" ")[0].length); return -40 -2*d.name.split(" ")[0].length})
           .text(d.depth < 2 ? d.name : d.depth == 2 ? d.name + " - " + d3.format(".4n")((d.value/d.children.length)) : d.name + " - " + d.value)
           .attr("fill-opacity", 1)
         .style("opacity",1);
@@ -330,7 +331,7 @@ var image_a = g.append("image")
 
 // image ligue 1
 var image_ligue_1 = g.append("image")
-    .filter(function(d){return d.depth == 0})
+    .filter(function(d,i){return i == 0})
     .attr("class", "ligue_1_png")
     .attr("href","club/ligue1.png")
     .attr("x", -50)
@@ -445,6 +446,7 @@ bookmaker = ['Bet365','Bet&Win','Interwetten','Ladbrokes','Pinnacle','William Hi
     }
       else if(temp_depth == 0){
   var image_ligue_1 = g.append("image")
+      .filter(function(d,i){return i == 0})
    .transition()
       .duration(1500)
     .attr("class", "ligue_1_png")
@@ -525,7 +527,7 @@ console.log(data)
 
     var    width_chart = data.length*110,
         height_chart =  200, 
-        x_translate = 350;
+        x_translate = 400;
         y_translate = -230+k*270;
 
     var  g_chart = svg.append("g").attr("transform", "translate(" + 30 + "," + 0 + ")").attr("id","chart");
@@ -565,15 +567,18 @@ console.log(data)
           .attr("y", function(d) { return y_chart(d.value)+y_translate; })
           .attr("width", x1_chart.bandwidth())
           .attr("height", function(d) { return height_chart - y_chart(d.value); })
-          .attr("fill", function(d) { return d.key == dico_name[d.FTR] ?'#a4eac7':color_book[d.key]; })
+          .attr("fill", function(d) { return color_book[d.key]; })
+          .attr("stroke", function(d) { return d.key == dico_name[d.FTR] ?'#a4eac7': 'black' ; })
+      .attr("stroke-width", function(d) { return d.key == dico_name[d.FTR] ? 4 : 0 ; })
+      
             //.attr("stroke",function(d, i){console.log(0)})
          .on("mouseover", function(d) {
 
-        d3.select(this).style("stroke","black")
+        d3.select(this)
          .style("opacity",0.5)
                   // console.log(this.width)
         tooltip2 
-          .attr("x",  950)
+          .attr("x", 930 + (d.key +" - "+d.value).length/2)
           .attr("y", 30)
 //         function(){
 //            if (d.key == 'Home'){return k == 1 ? -50 : 50}
@@ -623,6 +628,26 @@ console.log(data)
           .attr("y", height_chart/3  + 9.5 + y_translate)
           .attr("dy", "0.32em")
           .text(function(d) { return d; });
+        
+          legend.append("rect") 
+          .filter(function(d,i){return i==1})
+          .attr("class", 'true result')
+          .attr("x", width_chart + 60 + x_translate)
+          .attr("y",  height_chart/3 + y_translate+65)
+          .attr("width", 19)
+          .attr("height", 29)
+          .attr("stroke", '#a4eac7')
+            .attr("stroke-width", 2)
+            .attr("fill", '#000000');
+          legend.append("text") 
+          .filter(function(d,i){return i==1})
+          .attr("class", 'true result')
+          .attr("x", width_chart + 43 + x_translate)
+          .attr("y",  height_chart/3 + y_translate+85)
+          .attr("width", 19)
+          .attr("height", 19)
+          .text('Result').attr('font-size',13.5);
+        
         }
       }
       else{
