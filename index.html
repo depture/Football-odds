@@ -30,7 +30,7 @@ form {
 }
 path {
   stroke: #ffffff;
-  stroke-width: 0.8;
+  stroke-width: 0.1;
   fill-rule: evenodd;
 }
     
@@ -56,16 +56,17 @@ drop {
 }
 span2 {
   position: absolute;
-  left: 88px;
-  top: 10px;
-  width: 270px
+  left: 18px;
+  top: 77px;
+  width: 270px;
+  color: #ffffff;
 }
 </style>
 <body>
 <div id="drop"></div>
 <input type="range"id="slider" class="d3-slider" margin="500" type="range" value="0" min="0" max="100" step="1")/>
-<span1 id="journee">Journée</span1>
-<span2 id="saison">Use only on day level!</span2>
+<span1 id="journee">Day</span1>
+<span2 id="info">Only use the slider at day level of the sunburst!</span2>
 <div id="pie"></div>
 <div id="graph"></div>    
 <form>
