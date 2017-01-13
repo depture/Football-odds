@@ -179,7 +179,7 @@ d3.json("saison.json", function(error, saison) {
 
  function drawSunBurst(saison, currentWeek) {
 
-d3.selectAll('svg > *').remove();
+d3.selectAll('svg > g > *').remove();
 
   // Container for the tooltip.
   var tooltip = svg.append("text")
